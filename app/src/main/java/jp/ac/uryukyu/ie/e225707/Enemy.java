@@ -8,82 +8,18 @@ package jp.ac.uryukyu.ie.e225707;
   *  boolean dead; //敵の生死状態。true=死亡。
   * Created by tnal on 2016/11/13.
   */
-  public class Enemy {
-    private String name;
-    private int hitPoint;
-    private int attack;
-    private boolean dead;
-
-    /**
-     * コンストラクタ。名前、最大HP、攻撃力を指定する。
-     * @param name モンスター名
-     * @param maximumHP モンスターのHP
-     * @param attack モンスターの攻撃力
-     */
-    
-
-    public String getName(){
-        return this.name;
+  public class Enemy extends LivingThing {
+    public Enemy(String name, int maximumHP, int attack){
+        super (name,maximumHP,attack);
     }
 
-    public int getHitPoint(){
-        return this.hitPoint;
-    }
-
-    public int getAttack(){
-        return this.attack;
-    }
-
-    public boolean Dead_s(){
-        return this.dead;
-    }
-
-    public Enemy (String _name, int _maximumHP, int _attack) {
-        this.setName(_name);
-        this.setHitPoint(_maximumHP);
-        this.setAttack(_attack);
-        dead = false;
-        System.out.printf("%sのHPは%d。攻撃力は%dです。\n", _name, _maximumHP, _attack);
-    }
-
-    public void setName(String _name){
-        this.name = _name;
-    }
-
-    public void setHitPoint(int _maximumHP){
-        this.hitPoint = _maximumHP;
-    }
-
-    public void setAttack(int _attack){
-        this.attack = _attack;
-    }
-
-    /**
-@@ -34,9 +63,13 @@ public Enemy (String name, int maximumHP, int attack) {
-     * @param hero 攻撃対象
-     */
-    public void attack(Hero hero){
-        if (this.dead==false){
-            int damage = (int)(Math.random() * this.getAttack());
-            System.out.printf("%sの攻撃！%sに%dのダメージを与えた！！\n", this.getName(), hero.getName(), damage);
-            hero.wounded(damage);
+    @Override
+     public void wounded(int damage){
+        hitPoint -= damage;
+         if( hitPoint < 0 ) {
+             dead = true;
+             System.out.printf("モンスター%sは道半ばで力尽きてしまった。\n", name);
+            }
         }
-
-
-    }
-
-    /**
-@@ -45,10 +78,10 @@ public void attack(Hero hero){
-     * @param damage 受けたダメージ
-     */
-    public void wounded(int damage){
-        this.hitPoint -= damage;
-        if( hitPoint < 0 ) {
-            this.dead = true;
-            System.out.printf("モンスター%sは倒れた。\n", this.getName());
-        }
-    }
-
-
-  }
-
+   
+   }
